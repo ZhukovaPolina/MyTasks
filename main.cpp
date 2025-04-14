@@ -11,11 +11,14 @@ int main()
 
 
 
-    // ���� ��������� �����
-    auto x = getCoordinate("������� ���������� x ������ �����: ");
-    auto y = getCoordinate("������� ���������� y ������ �����: ");
-    auto z = getCoordinate("������� ���������� z ������ �����: ");
-    Point point1(x, y, z);
+    getpoint(const int x,y,z):
+{
+    double x = getCoordinate("Введите координаты точек x");
+    double y = getCoordinate("Введите координаты точек y");
+    double z = getCoordinate("Введите координаты точек z");
+    return x,y,z
+}
+    
 
     x = getCoordinate("������� ���������� x ������ �����: ");
     y = getCoordinate("������� ���������� y ������ �����: ");
