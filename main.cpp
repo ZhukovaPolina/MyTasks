@@ -1,60 +1,57 @@
-﻿#include <iostream>
+#include <iostream>
 #include <string>
 #include "Point.h"
 #include "Tetrahedron.h"
 
-double getCoordinate(const std::string& message);
+using namespace std;
+
+Point getPoint(const string& pointName);
+double getCoordinate(const string& message);
 
 int main()
 {
     setlocale(LC_ALL, "Russian");
 
+    try {
+        // Получаем 4 точки для тетраэдра
+        Point point1 = getPoint("Точка 1");
+        Point point2 = getPoint("Точка 2");
+        Point point3 = getPoint("Точка 3");
+        Point point4 = getPoint("Точка 4");
 
+        // Создаем тетраэдр
+        Tetrahedron tetrahedron(point1, point2, point3, point4);
 
-    getpoint(const int x,y,z):
-{
-    double x = getCoordinate("Введите координаты точек x");
-    double y = getCoordinate("Введите координаты точек y");
-    double z = getCoordinate("Введите координаты точек z");
-    return x,y,z
-}
-    
+        // Выводим площадь основания тетраэдра
+        cout << "Площадь основания тетраэдра: " << tetrahedron.baseArea() << endl;
 
-    x = getCoordinate("������� ���������� x ������ �����: ");
-    y = getCoordinate("������� ���������� y ������ �����: ");
-    z = getCoordinate("������� ���������� z ������ �����: ");
-    Point point2(x, y, z);
-
-    x = getCoordinate("������� ���������� x ������� �����: ");
-    y = getCoordinate("������� ���������� y ������� �����: ");
-    z = getCoordinate("������� ���������� z ������� �����: ");
-    Point point3(x, y, z);
-
-    x = getCoordinate("������� ���������� x ��������� �����: ");
-    y = getCoordinate("������� ���������� y ��������� �����: ");
-    z = getCoordinate("������� ���������� z ��������� �����: ");
-    Point point4(x, y, z);
-
-    // �������� ���������
-    Tetrahedron tetrahedron(point1, point2, point3, point4);
-
-    // ����� ������� ���������
-    std::cout << "������� ��������� �����: " << tetrahedron.baseArea() << std::endl;
-
-
-
+    }
+    catch (const invalid_argument& e) {
+        cerr << "Ошибка: " << e.what() << endl;
+        return 1;
+    }
 
     return 0;
 }
 
-double getCoordinate(const std::string& message)
+Point getPoint(const string& pointName)
 {
-    std::cout << message << std::endl;
+    cout << "Ввод координат для " << pointName << ":" << endl;
+    double x = getCoordinate("Введите координату x: ");
+    double y = getCoordinate("Введите координату y: ");
+    double z = getCoordinate("Введите координату z: ");
+    return Point(x, y, z);
+}
+
+double getCoordinate(const string& message)
+{
+    cout << message;
     double coordinate = 0.0;
-    std::cin >> coordinate;
-    if (std::cin.fail())
-    {
-        throw std::invalid_argument("������� ������������ ��������");
+    cin >> coordinate;
+    if (cin.fail()) {
+        cin.clear();
+        cin.ignore(numeric_limits<streamsize>::max(), '\n');
+        throw invalid_argument("Введено некорректное значение координаты");
     }
     return coordinate;
 }
